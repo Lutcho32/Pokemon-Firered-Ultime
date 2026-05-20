@@ -24,8 +24,6 @@ void RtcGetTime(struct SiiRtcInfo *rtc);
 void RtcCalcLocalTime(void);
 void RtcInitLocalTimeOffset(s32 hour, s32 minute);
 
-#endif // GUARD_RTC_H
-
 #define DAY_MORNING 0
 #define DAY_DAY     1
 #define DAY_EVENING 2
@@ -33,3 +31,5 @@ void RtcInitLocalTimeOffset(s32 hour, s32 minute);
 
 u8 GetCurrentTimeOfDay(void);
 void ApplyDayNightTint(u16 *pltt, u16 size);
+
+#endif // GUARD_RTC_H

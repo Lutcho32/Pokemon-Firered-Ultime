@@ -180,6 +180,7 @@ void AgbMain()
     for (;;)
     {
         ReadKeys();
+        RtcCalcLocalTime();
 
         if (gSoftResetDisabled == FALSE
          && (gMain.heldKeysRaw & A_BUTTON)

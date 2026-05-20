@@ -77,7 +77,6 @@ void RtcInitLocalTimeOffset(s32 hour, s32 minute)
 
 u8 GetCurrentTimeOfDay(void)
 {
-    RtcCalcLocalTime();
     if (gLocalTime.hours >= 5 && gLocalTime.hours < 10)
         return DAY_MORNING;
     if (gLocalTime.hours >= 10 && gLocalTime.hours < 17)

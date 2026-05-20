@@ -448,3 +448,4 @@
 #define F_TRAINER_PARTY_HELD_ITEM      (1 << 1)
 
 #endif  // GUARD_CONSTANTS_TRAINERS_H
+#define F_TRAINER_PARTY_NATURE         (1 << 2)
