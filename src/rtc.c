@@ -1,5 +1,6 @@
 #include "global.h"
 #include "rtc.h"
+#include "constants/pokemon.h"
 #include "gba/flash_internal.h"
 
 struct Time gLocalTime;
@@ -127,6 +128,66 @@ void ApplyDayNightTint(u16 *pltt, u16 size)
             b = (b * 24) / 31;
             break;
         }
+
+        pltt[i] = (r & 0x1F) | ((g & 0x1F) << 5) | ((b & 0x1F) << 10);
+    }
+}
+
+void ApplyTypeTint(u16 *pltt, u16 size, u8 type)
+{
+    u16 i;
+    u32 r, g, b;
+    u16 color;
+    u8 tr = 31, tg = 31, tb = 31;
+
+    switch (type)
+    {
+    case TYPE_NORMAL:
+        tr = 25; tg = 25; tb = 22; break;
+    case TYPE_FIGHTING:
+        tr = 30; tg = 18; tb = 15; break;
+    case TYPE_FLYING:
+        tr = 22; tg = 25; tb = 30; break;
+    case TYPE_POISON:
+        tr = 25; tg = 15; tb = 30; break;
+    case TYPE_GROUND:
+        tr = 28; tg = 24; tb = 15; break;
+    case TYPE_ROCK:
+        tr = 22; tg = 20; tb = 15; break;
+    case TYPE_BUG:
+        tr = 22; tg = 28; tb = 15; break;
+    case TYPE_GHOST:
+        tr = 18; tg = 15; tb = 25; break;
+    case TYPE_STEEL:
+        tr = 22; tg = 25; tb = 28; break;
+    case TYPE_FIRE:
+        tr = 31; tg = 18; tb = 12; break;
+    case TYPE_WATER:
+        tr = 15; tg = 22; tb = 31; break;
+    case TYPE_GRASS:
+        tr = 15; tg = 28; tb = 15; break;
+    case TYPE_ELECTRIC:
+        tr = 30; tg = 30; tb = 12; break;
+    case TYPE_PSYCHIC:
+        tr = 31; tg = 15; tb = 25; break;
+    case TYPE_ICE:
+        tr = 18; tg = 28; tb = 31; break;
+    case TYPE_DRAGON:
+        tr = 18; tg = 15; tb = 31; break;
+    case TYPE_DARK:
+        tr = 15; tg = 12; tb = 18; break;
+    }
+
+    for (i = 0; i < size / 2; i++)
+    {
+        color = pltt[i];
+        r = color & 0x1F;
+        g = (color >> 5) & 0x1F;
+        b = (color >> 10) & 0x1F;
+
+        r = (r * tr) / 31;
+        g = (g * tg) / 31;
+        b = (b * tb) / 31;
 
         pltt[i] = (r & 0x1F) | ((g & 0x1F) << 5) | ((b & 0x1F) << 10);
     }
