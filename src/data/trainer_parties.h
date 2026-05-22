@@ -11044,7 +11044,7 @@ static const struct TrainerMonItemCustomMovesNature sParty_ErikaRematch[] = {
     .lvl = 67,
     .species = SPECIES_VICTREEBEL,
     .heldItem = ITEM_WHITE_HERB,
-    .moves = {MOVE_LEAF_STORM, MOVE_SLUDGE_BOMB, MOVE_WEATHER_BALL, MOVE_SLASH},
+    .moves = {MOVE_SOLAR_BEAM, MOVE_SLUDGE_BOMB, MOVE_WEATHER_BALL, MOVE_SLASH},
     .nature = NATURE_LONELY,
     .ev = {0, 126, 0, 126, 252, 0}
     },
@@ -11203,7 +11203,7 @@ static const struct TrainerMonItemCustomMovesNature sParty_BlaineRematch[] = {
     },
     {
     .iv = 255,
-    .lvl = 67,
+    .lvl = 68,
     .species = SPECIES_VICTREEBEL,
     .heldItem = ITEM_MIRACLE_SEED,
     .moves = {MOVE_SOLAR_BEAM, MOVE_WEATHER_BALL, MOVE_SLUDGE_BOMB, MOVE_GROWTH},
@@ -11215,22 +11215,22 @@ static const struct TrainerMonItemCustomMovesNature sParty_BlaineRematch[] = {
     .lvl = 68,
     .species = SPECIES_MOLTRES,
     .heldItem = ITEM_CHARCOAL,
-    .moves = {MOVE_FIRE_BLAST, MOVE_AERIAL_ACE, MOVE_FLAMETHROWER, MOVE_ANCIENT_POWER},
+    .moves = {MOVE_OVERHEAT, MOVE_AERIAL_ACE, MOVE_SUNNY_DAY, MOVE_FLAMETHROWER},
     .nature = NATURE_MODEST,
     .ev = {0, 0, 0, 252, 252, 0}
     },
     {
     .iv = 255,
-    .lvl = 68,
+    .lvl = 69,
     .species = SPECIES_ARCANINE,
     .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_FIRE_BLAST, MOVE_EXTREME_SPEED, MOVE_BITE, MOVE_MORNING_SUN},
+    .moves = {MOVE_FLAMETHROWER, MOVE_EXTREME_SPEED, MOVE_CRUNCH, MOVE_MORNING_SUN},
     .nature = NATURE_ADAMANT,
     .ev = {0, 252, 0, 252, 0, 0}
     },
     {
     .iv = 255,
-    .lvl = 67,
+    .lvl = 68,
     .species = SPECIES_TANGELA,
     .heldItem = ITEM_LEFTOVERS,
     .moves = {MOVE_SOLAR_BEAM, MOVE_SLEEP_POWDER, MOVE_GIGA_DRAIN, MOVE_HIDDEN_POWER},
@@ -11239,10 +11239,10 @@ static const struct TrainerMonItemCustomMovesNature sParty_BlaineRematch[] = {
     },
     {
     .iv = 255,
-    .lvl = 69,
+    .lvl = 70,
     .species = SPECIES_CHARIZARD,
     .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_FIRE_BLAST, MOVE_AIR_SLASH, MOVE_DRAGON_CLAW, MOVE_FIRE_PUNCH},
+    .moves = {MOVE_FIRE_BLAST, MOVE_WING_ATTACK, MOVE_DRAGON_CLAW, MOVE_CRUNCH},
     .nature = NATURE_TIMID,
     .ev = {0, 0, 0, 252, 252, 0}
     }
@@ -11254,25 +11254,25 @@ static const struct TrainerMonItemCustomMovesNature sParty_GiovanniRematch[] = {
     .lvl = 68,
     .species = SPECIES_TYRANITAR,
     .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_SPIKES, MOVE_CRUNCH, MOVE_ROCK_SLIDE, MOVE_PURSUIT},
+    .moves = {MOVE_ROCK_SLIDE, MOVE_CRUNCH, MOVE_EARTHQUAKE, MOVE_PURSUIT},
     .nature = NATURE_ADAMANT,
     .ev = {252, 252, 0, 0, 0, 0}
     },
     {
     .iv = 255,
-    .lvl = 68,
+    .lvl = 69,
     .species = SPECIES_DUGTRIO,
     .heldItem = ITEM_BRIGHT_POWDER,
-    .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_SLASH, MOVE_REVERSAL},
+    .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_SLUDGE_BOMB, MOVE_AERIAL_ACE},
     .nature = NATURE_JOLLY,
     .ev = {0, 252, 0, 252, 0, 0}
     },
     {
     .iv = 255,
-    .lvl = 68,
+    .lvl = 69,
     .species = SPECIES_RHYDON,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_EARTHQUAKE, MOVE_FIRE_PUNCH, MOVE_MEGAHORN, MOVE_ROAR},
+    .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_MEGAHORN, MOVE_ROAR},
     .nature = NATURE_ADAMANT,
     .ev = {252, 252, 0, 0, 0, 0}
     },
@@ -11290,7 +11290,7 @@ static const struct TrainerMonItemCustomMovesNature sParty_GiovanniRematch[] = {
     .lvl = 69,
     .species = SPECIES_NIDOKING,
     .heldItem = ITEM_WHITE_HERB,
-    .moves = {MOVE_SLUDGE_BOMB, MOVE_EARTHQUAKE, MOVE_THUNDER_PUNCH, MOVE_THRASH},
+    .moves = {MOVE_SLUDGE_BOMB, MOVE_EARTHQUAKE, MOVE_THUNDERBOLT, MOVE_ICE_BEAM},
     .nature = NATURE_ADAMANT,
     .ev = {0, 252, 0, 252, 0, 0}
     },
@@ -11299,7 +11299,7 @@ static const struct TrainerMonItemCustomMovesNature sParty_GiovanniRematch[] = {
     .lvl = 70,
     .species = SPECIES_AERODACTYL,
     .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_WING_ATTACK, MOVE_ROCK_SLIDE, MOVE_EARTHQUAKE, MOVE_ANCIENT_POWER},
+    .moves = {MOVE_ROCK_SLIDE, MOVE_EARTHQUAKE, MOVE_WING_ATTACK, MOVE_DOUBLE_EDGE},
     .nature = NATURE_JOLLY,
     .ev = {0, 252, 0, 252, 0, 0}
     }
