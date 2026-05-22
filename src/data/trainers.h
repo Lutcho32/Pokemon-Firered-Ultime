@@ -7462,17 +7462,24 @@ const struct Trainer gTrainers[] = {
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
         .party = ITEM_CUSTOM_MOVES_NATURE(sParty_SabrinaRematch),
     },
-    [TRAINER_BLAINE_REMATCH] = {
+    [TRAINER_BLAINE_REMATCH] =
+    {
+        .partySize = ARRAY_COUNT(sBlaineRematchParty),
+        .party = {.NoItemCustomMoves = sBlaineRematchParty},
         .trainerClass = TRAINER_CLASS_LEADER,
         .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_INTENSE,
         .trainerPic = TRAINER_PIC_LEADER_BLAINE,
-        .trainerName = _("BLAINE"),
+        .trainerName = _("AUGUSTE"),
         .items = {ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE},
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
-        .party = ITEM_CUSTOM_MOVES_NATURE(sParty_BlaineRematch),
+        .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
     },
-    [TRAINER_GIOVANNI_REMATCH] = {
+
+    [TRAINER_GIOVANNI_REMATCH] =
+    {
+        .partySize = ARRAY_COUNT(sGiovanniRematchParty),
+        .party = {.NoItemCustomMoves = sGiovanniRematchParty},
         .trainerClass = TRAINER_CLASS_BOSS,
         .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_INTENSE,
         .trainerPic = TRAINER_PIC_LEADER_GIOVANNI,
@@ -7480,6 +7487,6 @@ const struct Trainer gTrainers[] = {
         .items = {ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE},
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
-        .party = ITEM_CUSTOM_MOVES_NATURE(sParty_GiovanniRematch),
+        .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
     },
 };
