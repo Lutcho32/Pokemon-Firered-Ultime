@@ -94,4 +94,6 @@ void HandleAction_RunBattleScript(void);
 u8 GetMoveTarget(u16 move, u8 setTarget);
 u8 IsMonDisobedient(void);
 
+#define GET_MOVE_SPLIT(move) (gBattleMoves[move].split)
+
 #endif // GUARD_BATTLE_UTIL_H

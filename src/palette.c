@@ -1,4 +1,7 @@
 #include "global.h"
+#include "main.h"
+#include "overworld.h"
+#include "rtc.h"
 #include "gflib.h"
 #include "util.h"
 #include "decompress.h"
@@ -103,7 +106,15 @@ void TransferPlttBuffer(void)
     {
         void *src = gPlttBufferFaded;
         void *dest = (void *)PLTT;
-        DmaCopy16(3, src, dest, PLTT_SIZE);
+        if (gMain.callback2 == CB2_Overworld || gMain.callback2 == CB2_OverworldBasic)
+        {
+            u16 tintedPltt[PLTT_BUFFER_SIZE];
+            CpuCopy16(src, tintedPltt, PLTT_SIZE);
+            ApplyDayNightTint(tintedPltt, PLTT_SIZE);
+            DmaCopy16(3, tintedPltt, dest, PLTT_SIZE);
+        }
+        else
+            DmaCopy16(3, src, dest, PLTT_SIZE);
         sPlttBufferTransferPending = FALSE;
         if (gPaletteFade.mode == HARDWARE_FADE && gPaletteFade.active)
             UpdateBlendRegisters();
@@ -180,7 +191,15 @@ bool8 BeginNormalPaletteFade(u32 selectedPalettes, s8 delay, u8 startY, u8 targe
         UpdatePaletteFade();
         temp = gPaletteFade.bufferTransferDisabled;
         gPaletteFade.bufferTransferDisabled = FALSE;
-        CpuCopy32(gPlttBufferFaded, (void *)PLTT, PLTT_SIZE);
+        if (gMain.callback2 == CB2_Overworld || gMain.callback2 == CB2_OverworldBasic)
+        {
+            u16 tintedPltt[PLTT_BUFFER_SIZE];
+            CpuCopy16(gPlttBufferFaded, tintedPltt, PLTT_SIZE);
+            ApplyDayNightTint(tintedPltt, PLTT_SIZE);
+            CpuCopy32(tintedPltt, (void *)PLTT, PLTT_SIZE);
+        }
+        else
+            CpuCopy32(gPlttBufferFaded, (void *)PLTT, PLTT_SIZE);
         sPlttBufferTransferPending = FALSE;
         if (gPaletteFade.mode == HARDWARE_FADE && gPaletteFade.active)
             UpdateBlendRegisters();
@@ -499,7 +518,7 @@ void TintPlttBuffer(u32 selectedPalettes, s8 r, s8 g, s8 b)
             for (i = 0; i < 16; ++i)
             {
                 struct PlttData *data = (struct PlttData *)&gPlttBufferFaded[paletteOffset + i];
-                
+
                 data->r += r;
                 data->g += g;
                 data->b += b;

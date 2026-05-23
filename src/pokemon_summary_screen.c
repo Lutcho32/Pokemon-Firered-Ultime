@@ -228,6 +228,7 @@ struct PokemonSummaryScreenData
     u8 ALIGNED(4) state3284; /* 0x3284 */
     u8 ALIGNED(4) selectMoveInputHandlerState; /* 0x3288 */
     u8 ALIGNED(4) switchMonTaskState; /* 0x328C */
+    u8 statViewMode;
 
     struct Pokemon currentMon; /* 0x3290 */
 
@@ -914,6 +915,8 @@ static const u8 sLevelNickTextColors[][3] =
     {0, 5, 4},
     {0, 2, 3},
     {0, 11, 10},
+    {0, 12, 13}, // Red
+    {0, 14, 15}, // Blue
 };
 
 static const u8 ALIGNED(4) sMultiBattlePartyOrder[] =
@@ -2496,14 +2499,58 @@ static void PrintInfoPage(void)
     }
 }
 
+static u8 GetStatColorByNature(u8 nature, u8 statIndex)
+{
+    static const s8 sNatureStatTable[NUM_NATURES][NUM_NATURE_STATS] =
+    {                      // Attack  Defense  Speed  Sp.Atk  Sp.Def
+        [NATURE_HARDY]   = {    0,      0,      0,      0,      0   },
+        [NATURE_LONELY]  = {   +1,     -1,      0,      0,      0   },
+        [NATURE_BRAVE]   = {   +1,      0,     -1,      0,      0   },
+        [NATURE_ADAMANT] = {   +1,      0,      0,     -1,      0   },
+        [NATURE_NAUGHTY] = {   +1,      0,      0,      0,     -1   },
+        [NATURE_BOLD]    = {   -1,     +1,      0,      0,      0   },
+        [NATURE_DOCILE]  = {    0,      0,      0,      0,      0   },
+        [NATURE_RELAXED] = {    0,     +1,     -1,      0,      0   },
+        [NATURE_IMPISH]  = {    0,     +1,      0,     -1,      0   },
+        [NATURE_LAX]     = {    0,     +1,      0,      0,     -1   },
+        [NATURE_TIMID]   = {   -1,      0,     +1,      0,      0   },
+        [NATURE_HASTY]   = {    0,     -1,     +1,      0,      0   },
+        [NATURE_SERIOUS] = {    0,      0,      0,      0,      0   },
+        [NATURE_JOLLY]   = {    0,      0,     +1,     -1,      0   },
+        [NATURE_NAIVE]   = {    0,      0,     +1,      0,     -1   },
+        [NATURE_MODEST]  = {   -1,      0,      0,     +1,      0   },
+        [NATURE_MILD]    = {    0,     -1,      0,     +1,      0   },
+        [NATURE_QUIET]   = {    0,      0,     -1,     +1,      0   },
+        [NATURE_BASHFUL] = {    0,      0,      0,      0,      0   },
+        [NATURE_RASH]    = {    0,      0,      0,     +1,     -1   },
+        [NATURE_CALM]    = {   -1,      0,      0,      0,     +1   },
+        [NATURE_GENTLE]  = {    0,     -1,      0,      0,     +1   },
+        [NATURE_SASSY]   = {    0,      0,     -1,      0,     +1   },
+        [NATURE_CAREFUL] = {    0,      0,      0,     -1,     +1   },
+        [NATURE_QUIRKY]  = {    0,      0,      0,      0,      0   },
+    };
+
+    switch (sNatureStatTable[nature][statIndex])
+    {
+    case 1:
+        return 6; // Red
+    case -1:
+        return 7; // Blue
+    default:
+        return 0; // Normal
+    }
+}
+
 static void PrintSkillsPage(void)
 {
+    u8 nature = GetNature(&sMonSummaryScreen->currentMon);
+
     AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 14 + sMonSkillsPrinterXpos->curHpStr, 4, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.curHpStrBuf);
-    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->atkStr, 22, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_ATK]);
-    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->defStr, 35, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_DEF]);
-    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->spAStr, 48, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPA]);
-    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->spDStr, 61, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPD]);
-    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->speStr, 74, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPE]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->atkStr, 22, sLevelNickTextColors[GetStatColorByNature(nature, 0)], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_ATK]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->defStr, 35, sLevelNickTextColors[GetStatColorByNature(nature, 1)], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_DEF]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->spAStr, 48, sLevelNickTextColors[GetStatColorByNature(nature, 3)], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPA]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->spDStr, 61, sLevelNickTextColors[GetStatColorByNature(nature, 4)], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPD]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 50 + sMonSkillsPrinterXpos->speStr, 74, sLevelNickTextColors[GetStatColorByNature(nature, 2)], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPE]);
     AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 15 + sMonSkillsPrinterXpos->expStr, 87, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.expPointsStrBuf);
     AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], FONT_NORMAL, 15 + sMonSkillsPrinterXpos->toNextLevel, 100, sLevelNickTextColors[0], TEXT_SKIP_DRAW, sMonSummaryScreen->summary.expToNextLevelStrBuf);
 }

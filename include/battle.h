@@ -91,6 +91,17 @@ struct TrainerMonNoItemCustomMoves
     u16 moves[MAX_MON_MOVES];
 };
 
+struct TrainerMonItemCustomMovesNature
+{
+    u16 iv;
+    u8 lvl;
+    u16 species;
+    u16 heldItem;
+    u16 moves[MAX_MON_MOVES];
+    u8 nature;
+    u8 ability;
+};
+
 struct TrainerMonItemCustomMoves
 {
     u16 iv;
@@ -104,6 +115,7 @@ struct TrainerMonItemCustomMoves
 #define NO_ITEM_CUSTOM_MOVES(party) { .NoItemCustomMoves = party }, .partySize = ARRAY_COUNT(party), .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET
 #define ITEM_DEFAULT_MOVES(party) { .ItemDefaultMoves = party }, .partySize = ARRAY_COUNT(party), .partyFlags = F_TRAINER_PARTY_HELD_ITEM
 #define ITEM_CUSTOM_MOVES(party) { .ItemCustomMoves = party }, .partySize = ARRAY_COUNT(party), .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM
+#define ITEM_CUSTOM_MOVES_NATURE(party) { .ItemCustomMovesNature = party }, .partySize = ARRAY_COUNT(party), .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM | F_TRAINER_PARTY_NATURE
 
 union TrainerMonPtr
 {
@@ -111,6 +123,7 @@ union TrainerMonPtr
     const struct TrainerMonNoItemCustomMoves *NoItemCustomMoves;
     const struct TrainerMonItemDefaultMoves *ItemDefaultMoves;
     const struct TrainerMonItemCustomMoves *ItemCustomMoves;
+    const struct TrainerMonItemCustomMovesNature *ItemCustomMovesNature;
 };
 
 struct Trainer
@@ -474,6 +487,10 @@ extern struct BattleStruct *gBattleStruct;
 
 #define IS_TYPE_PHYSICAL(moveType)(moveType < TYPE_MYSTERY)
 #define IS_TYPE_SPECIAL(moveType)(moveType > TYPE_MYSTERY)
+
+#define IS_MOVE_PHYSICAL(move)(GET_MOVE_SPLIT(move) == SPLIT_PHYSICAL)
+#define IS_MOVE_SPECIAL(move)(GET_MOVE_SPLIT(move) == SPLIT_SPECIAL)
+#define IS_MOVE_STATUS(move)(GET_MOVE_SPLIT(move) == SPLIT_STATUS)
 
 #define TARGET_TURN_DAMAGED ((gSpecialStatuses[gBattlerTarget].physicalDmg != 0 || gSpecialStatuses[gBattlerTarget].specialDmg != 0))
 

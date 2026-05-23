@@ -16,6 +16,7 @@
 #include "constants/maps.h"
 #include "constants/abilities.h"
 #include "constants/items.h"
+#include "rtc.h"
 
 #define MAX_ENCOUNTER_RATE 1600
 
@@ -43,6 +44,7 @@ static void ApplyCleanseTagEncounterRateMod(u32 *rate);
 static bool8 IsLeadMonHoldingCleanseTag(void);
 static u16 WildEncounterRandom(void);
 static void AddToWildEncounterRateBuff(u8 encouterRate);
+static const struct WildPokemonInfo *GetLandMonsInfo(u16 headerId);
 
 #include "data/wild_encounters.h"
 
@@ -365,13 +367,13 @@ bool8 StandardWildEncounter(u32 currMetatileAttrs, u16 previousMetatileBehavior)
     {
         if (ExtractMetatileAttribute(currMetatileAttrs, METATILE_ATTRIBUTE_ENCOUNTER_TYPE) == TILE_ENCOUNTER_LAND)
         {
-            if (gWildMonHeaders[headerId].landMonsInfo == NULL)
+            if (GetLandMonsInfo(headerId) == NULL)
                 return FALSE;
             else if (previousMetatileBehavior != ExtractMetatileAttribute(currMetatileAttrs, METATILE_ATTRIBUTE_BEHAVIOR) && !DoGlobalWildEncounterDiceRoll())
                 return FALSE;
-            if (DoWildEncounterRateTest(gWildMonHeaders[headerId].landMonsInfo->encounterRate, FALSE) != TRUE)
+            if (DoWildEncounterRateTest(GetLandMonsInfo(headerId)->encounterRate, FALSE) != TRUE)
             {
-                AddToWildEncounterRateBuff(gWildMonHeaders[headerId].landMonsInfo->encounterRate);
+                AddToWildEncounterRateBuff(GetLandMonsInfo(headerId)->encounterRate);
                 return FALSE;
             }
 
@@ -390,14 +392,14 @@ bool8 StandardWildEncounter(u32 currMetatileAttrs, u16 previousMetatileBehavior)
             {
 
                 // try a regular wild land encounter
-                if (TryGenerateWildMon(gWildMonHeaders[headerId].landMonsInfo, WILD_AREA_LAND, WILD_CHECK_REPEL) == TRUE)
+                if (TryGenerateWildMon(GetLandMonsInfo(headerId), WILD_AREA_LAND, WILD_CHECK_REPEL) == TRUE)
                 {
                     StartWildBattle();
                     return TRUE;
                 }
                 else
                 {
-                    AddToWildEncounterRateBuff(gWildMonHeaders[headerId].landMonsInfo->encounterRate);
+                    AddToWildEncounterRateBuff(GetLandMonsInfo(headerId)->encounterRate);
                 }
             }
         }
@@ -478,10 +480,10 @@ bool8 SweetScentWildEncounter(void)
                 return TRUE;
             }
 
-            if (gWildMonHeaders[headerId].landMonsInfo == NULL)
+            if (GetLandMonsInfo(headerId) == NULL)
                 return FALSE;
 
-            TryGenerateWildMon(gWildMonHeaders[headerId].landMonsInfo, WILD_AREA_LAND, 0);
+            TryGenerateWildMon(GetLandMonsInfo(headerId), WILD_AREA_LAND, 0);
 
             StartWildBattle();
             return TRUE;
@@ -533,7 +535,7 @@ u16 GetLocalWildMon(bool8 *isWaterMon)
     headerId = GetCurrentMapWildMonHeaderId();
     if (headerId == HEADER_NONE)
         return SPECIES_NONE;
-    landMonsInfo = gWildMonHeaders[headerId].landMonsInfo;
+    landMonsInfo = GetLandMonsInfo(headerId);
     waterMonsInfo = gWildMonHeaders[headerId].waterMonsInfo;
     // Neither
     if (landMonsInfo == NULL && waterMonsInfo == NULL)
@@ -781,4 +783,14 @@ static void AddToWildEncounterRateBuff(u8 encounterRate)
         sWildEncounterData.encounterRateBuff += encounterRate;
     else
         sWildEncounterData.encounterRateBuff = 0;
+}
+
+static const struct WildPokemonInfo *GetLandMonsInfo(u16 headerId)
+{
+    u8 timeOfDay = GetCurrentTimeOfDay();
+    if (timeOfDay == DAY_MORNING && gWildMonHeaders[headerId].landMonsMorningInfo != NULL)
+        return gWildMonHeaders[headerId].landMonsMorningInfo;
+    if (timeOfDay == DAY_NIGHT && gWildMonHeaders[headerId].landMonsNightInfo != NULL)
+        return gWildMonHeaders[headerId].landMonsNightInfo;
+    return gWildMonHeaders[headerId].landMonsInfo;
 }

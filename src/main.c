@@ -5,6 +5,7 @@
 #include "load_save.h"
 #include "m4a.h"
 #include "random.h"
+#include "rtc.h"
 #include "gba/flash_internal.h"
 #include "help_system.h"
 #include "new_menu_helpers.h"
@@ -147,6 +148,7 @@ void AgbMain()
     EnableVCountIntrAtLine150();
     InitRFU();
     CheckForFlashMemory();
+    RtcInit();
     InitMainCallbacks();
     InitMapMusic();
     ClearDma3Requests();
@@ -178,6 +180,7 @@ void AgbMain()
     for (;;)
     {
         ReadKeys();
+        RtcCalcLocalTime();
 
         if (gSoftResetDisabled == FALSE
          && (gMain.heldKeysRaw & A_BUTTON)
