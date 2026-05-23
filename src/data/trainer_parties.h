@@ -11268,3 +11268,63 @@ static const struct TrainerMonNoItemCustomMoves sGiovanniRematchParty[] = {
     .moves = {MOVE_ROCK_SLIDE, MOVE_EARTHQUAKE, MOVE_WING_ATTACK, MOVE_DOUBLE_EDGE}
     }
 };
+
+static const struct TrainerMonItemCustomMovesNature sParty_RoxanneMtMoon[] = {
+    {
+    .iv = 255,
+    .lvl = 20,
+    .species = SPECIES_GEODUDE,
+    .heldItem = ITEM_HARD_STONE,
+    .moves = {MOVE_ROCK_THROW, MOVE_MAGNITUDE, MOVE_DEFENSE_CURL, MOVE_ROLLOUT},
+    .nature = NATURE_ADAMANT,
+    .ev = {126, 126, 126, 0, 0, 0}
+    },
+    {
+    .iv = 255,
+    .lvl = 21,
+    .species = SPECIES_ONIX,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_ROCK_THROW, MOVE_BIND, MOVE_SCREECH, MOVE_HARDEN},
+    .nature = NATURE_IMPISH,
+    .ev = {126, 0, 252, 0, 0, 126}
+    },
+    {
+    .iv = 255,
+    .lvl = 22,
+    .species = SPECIES_NOSEPASS,
+    .heldItem = ITEM_ORAN_BERRY,
+    .moves = {MOVE_ROCK_TOMB, MOVE_THUNDER_WAVE, MOVE_BLOCK, MOVE_TACKLE},
+    .nature = NATURE_MODEST,
+    .ev = {252, 0, 252, 0, 0, 0}
+    }
+};
+
+static const struct TrainerMonItemCustomMovesNature sParty_BrawlyDiglettsCave[] = {
+    {
+    .iv = 255,
+    .lvl = 28,
+    .species = SPECIES_MACHOP,
+    .heldItem = ITEM_BLACK_BELT,
+    .moves = {MOVE_KARATE_CHOP, MOVE_LOW_KICK, MOVE_LEER, MOVE_FOCUS_ENERGY},
+    .nature = NATURE_ADAMANT,
+    .ev = {126, 252, 0, 126, 0, 0}
+    },
+    {
+    .iv = 255,
+    .lvl = 28,
+    .species = SPECIES_MEDITITE,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_CONFUSION, MOVE_DETECT, MOVE_HI_JUMP_KICK, MOVE_THUNDER_PUNCH},
+    .nature = NATURE_JOLLY,
+    .ev = {0, 252, 0, 252, 126, 0}
+    },
+    {
+    .iv = 255,
+    .lvl = 30,
+    .species = SPECIES_HARIYAMA,
+    .heldItem = ITEM_ORAN_BERRY,
+    .moves = {MOVE_ARM_THRUST, MOVE_FAKE_OUT, MOVE_KNOCK_OFF, MOVE_VITAL_THROW},
+    .nature = NATURE_ADAMANT,
+    .ev = {252, 252, 0, 0, 0, 0}
+    }
+};

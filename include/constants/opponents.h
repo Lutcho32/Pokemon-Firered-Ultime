@@ -752,12 +752,14 @@
 #define TRAINER_SABRINA_REMATCH                  746
 #define TRAINER_BLAINE_REMATCH                   747
 #define TRAINER_GIOVANNI_REMATCH                 748
+#define TRAINER_ROXANNE_MT_MOON                  749
+#define TRAINER_BRAWLY_DIGLETTS_CAVE             750
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is 
 //       only space for 25 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define NUM_TRAINERS                             749
+#define NUM_TRAINERS                             751
 #define MAX_TRAINERS_COUNT                       768
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H

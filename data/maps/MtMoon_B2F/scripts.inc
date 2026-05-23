@@ -134,3 +134,61 @@ MtMoon_B2F_EventScript_Grunt4::
 	trainerbattle_single TRAINER_TEAM_ROCKET_GRUNT_4, MtMoon_B2F_Text_Grunt4Intro, MtMoon_B2F_Text_Grunt4Defeat
 	msgbox MtMoon_B2F_Text_Grunt4PostBattle, MSGBOX_AUTOCLOSE
 	end
+
+MtMoon_B2F_EventScript_Roxanne::
+    lock
+    faceplayer
+    goto_if_set FLAG_DEFEATED_ROXANNE_MT_MOON, MtMoon_B2F_EventScript_RoxanneDefeated
+    msgbox MtMoon_B2F_Text_RoxanneIntro, MSGBOX_YESNO
+    compare VAR_RESULT, NO
+    goto_if_eq MtMoon_B2F_EventScript_RoxanneRefused
+
+    msgbox MtMoon_B2F_Text_RoxanneAccept, MSGBOX_DEFAULT
+    trainerbattle_no_intro TRAINER_ROXANNE_MT_MOON, MtMoon_B2F_Text_RoxanneDefeat
+
+    msgbox MtMoon_B2F_Text_RoxanneReward, MSGBOX_DEFAULT
+    giveitem ITEM_TM39, 1
+    giveitem ITEM_HARD_STONE, 1
+    setflag FLAG_DEFEATED_ROXANNE_MT_MOON
+    release
+    end
+
+MtMoon_B2F_EventScript_RoxanneRefused::
+    msgbox MtMoon_B2F_Text_RoxanneRefusedText, MSGBOX_DEFAULT
+    release
+    end
+
+MtMoon_B2F_EventScript_RoxanneDefeated::
+    msgbox MtMoon_B2F_Text_RoxannePostBattle, MSGBOX_DEFAULT
+    release
+    end
+
+MtMoon_B2F_Text_RoxanneIntro:
+    .string "Bonjour voyageur. Je m'appelle Roxanne,\n"
+    .string "Championne d'arène de Mérouville à Hoenn.\p"
+    .string "Ces fossiles du Mont Sélénite sont fascinants\n"
+    .string "pour mes recherches géologiques.\p"
+    .string "Dis-moi, tes yeux brillent de détermination...\n"
+    .string "Accepterais-tu un combat d'étude ?$"
+
+MtMoon_B2F_Text_RoxanneAccept:
+    .string "Excellent ! Voyons si ta stratégie peut\n"
+    .string "briser ma ligne de défense !$"
+
+MtMoon_B2F_Text_RoxanneRefusedText:
+    .string "Je comprends. L'exploration de cette grotte\n"
+    .string "demande toute ton attention. Reviens plus tard.$"
+
+MtMoon_B2F_Text_RoxanneDefeat:
+    .string "Incroyable... Ta science du combat dépasse\n"
+    .string "mes prévisions. Tu as magnifiquement joué.$"
+
+MtMoon_B2F_Text_RoxanneReward:
+    .string "Tu as su exploiter les failles de mes types\n"
+    .string "Roche. Prends ceci, c'est une étude sur le\n"
+    .string "contrôle du terrain.$"
+
+MtMoon_B2F_Text_RoxannePostBattle:
+    .string "Le monde est vaste, et Kanto regorge de\n"
+    .string "dresseurs puissants. Je vais continuer mes\n"
+    .string "recherches ici avant de rentrer à Hoenn.$"
